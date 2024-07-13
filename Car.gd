@@ -14,6 +14,7 @@ var remainingFuel = 0
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	#add_constant_torque(100000.0)
+	can_sleep = false
 	pass # Replace with function body.
 
 
@@ -23,14 +24,22 @@ func _process(_delta):
 
 
 func _physics_process(_delta):
+	print(_delta)
 	pass
 
 
 func _integrate_forces(state):
-	apply_torque(10000.0)
+	if Input.is_action_pressed("Gas"):
+		print("going forward")
+		state.apply_torque(getEngineInput())
+	#else: if Input.is_action_pressed("Reverse"):
+		
+	#apply_torque(10000.0)
 	#print(state)
-	pass
 
+
+func getEngineInput()->float:
+	return 100.0 * enginePower
 
 
 

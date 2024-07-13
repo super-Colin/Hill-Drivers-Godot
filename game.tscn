@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://dcue4apa6wu8t"]
+[gd_scene load_steps=5 format=3 uid="uid://dcue4apa6wu8t"]
 
 [ext_resource type="Script" path="res://game.gd" id="1_vb3r8"]
 [ext_resource type="PackedScene" uid="uid://bihbipx5ilscp" path="res://car.tscn" id="2_axb3p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_g8h5y"]
 size = Vector2(2238.5, 403)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_tng6c"]
+radius = 94.0
+height = 188.0
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_vb3r8")
@@ -27,3 +31,9 @@ shape = SubResource("RectangleShape2D_g8h5y")
 
 [node name="Car" parent="." instance=ExtResource("2_axb3p")]
 position = Vector2(120, 586)
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
+position = Vector2(865, 744)
+shape = SubResource("CapsuleShape2D_tng6c")
