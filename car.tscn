@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://bihbipx5ilscp"]
+
+[ext_resource type="Script" path="res://Car.gd" id="1_ygs4g"]
+[ext_resource type="Texture2D" uid="uid://br8a4n378f42w" path="res://icon.svg" id="2_mwtfj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_fl6mm"]
+radius = 49.0408
+
+[node name="Car" type="RigidBody2D"]
+script = ExtResource("1_ygs4g")
+
+[node name="Icon" type="Sprite2D" parent="."]
+texture = ExtResource("2_mwtfj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_fl6mm")
