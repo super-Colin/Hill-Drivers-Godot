@@ -1,21 +1,37 @@
-extends RigidBody2D
+extends Skeleton2D
 
-
-
+# --- Car settings (Upgradable) ---
 var width = 6
 var suspentionHeight = 4
 var tireSize = 3
-var enginePower = 100
+var enginePower = 1000
 var maxFuel = 100
+# ---------------------------------
 
+# ------ Current run vars ---------
 var remainingFuel = 0
+# ===
+func resetCurrentRunVars():
+	remainingFuel = maxFuel
+# ---------------------------------
+
+# ------- Physics vars ------------
+# Acceleration
+var forwardAcceleration = 0.0
+var reverseAcceleration = 0.0
+# ===
+
+# ---------------------------------
 
 
-# Called when the node enters the scene tree for the first time.
+
+
 func _ready():
-	#add_constant_torque(100000.0)
-	can_sleep = false
-	pass # Replace with function body.
+	#$'.'.custom_integrator  = true
+	$'.'.can_sleep = false # This is the player after all...
+	%Body.can_sleep = false # This is the player after all...
+	%FrontTire.can_sleep = false # This is the player after all...
+	%BackTire.can_sleep = false # This is the player after all...
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -24,18 +40,29 @@ func _process(_delta):
 
 
 func _physics_process(_delta):
-	print(_delta)
+	#print(_delta)
+	#_integrate_forces($'.'.state)
+	if Input.is_action_pressed("Forward"):
+		print("going forward")
+		%FrontTire.apply_torque(getEngineInput())
+		%BackTire.apply_torque(getEngineInput())
+	else: if Input.is_action_pressed("Reverse"):
+		%FrontTire.apply_torque(getEngineInput() * -0.5)
+		%BackTire.apply_torque(getEngineInput() * -0.5)
 	pass
 
 
 func _integrate_forces(state):
-	if Input.is_action_pressed("Gas"):
+	print("_integrate_forces")
+	if Input.is_action_pressed("Forward"):
 		print("going forward")
-		state.apply_torque(getEngineInput())
-	#else: if Input.is_action_pressed("Reverse"):
-		
+		%FrontTire.apply_torque(getEngineInput())
+		%BackTire.apply_torque(getEngineInput())
+	else: if Input.is_action_pressed("Reverse"):
+		%FrontTire.apply_torque(getEngineInput() * -0.5)
+		%BackTire.apply_torque(getEngineInput() * -0.5)
 	#apply_torque(10000.0)
-	#print(state)
+	print(state)
 
 
 func getEngineInput()->float:

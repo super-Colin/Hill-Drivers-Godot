@@ -1,16 +1,128 @@
-[gd_scene load_steps=4 format=3 uid="uid://bihbipx5ilscp"]
+[gd_scene load_steps=6 format=3 uid="uid://bihbipx5ilscp"]
 
 [ext_resource type="Script" path="res://Car.gd" id="1_ygs4g"]
 [ext_resource type="Texture2D" uid="uid://br8a4n378f42w" path="res://icon.svg" id="2_mwtfj"]
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_icikf"]
+absorbent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_40s3u"]
+size = Vector2(507, 101)
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fl6mm"]
 radius = 49.0408
 
-[node name="Car" type="RigidBody2D"]
+[node name="Car" type="Skeleton2D"]
 script = ExtResource("1_ygs4g")
 
 [node name="Icon" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("2_mwtfj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Body" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+mass = 0.64
+physics_material_override = SubResource("PhysicsMaterial_icikf")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
+shape = SubResource("RectangleShape2D_40s3u")
+
+[node name="ColorRect" type="ColorRect" parent="Body"]
+offset_left = -246.0
+offset_top = -44.0
+offset_right = 245.0
+offset_bottom = 41.0
+
+[node name="BackTire" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(-201, 141)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="BackTire"]
 shape = SubResource("CircleShape2D_fl6mm")
+
+[node name="ColorRect" type="ColorRect" parent="BackTire"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -37.0
+offset_top = -33.5
+offset_right = 37.0
+offset_bottom = 33.5
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="FrontTire" type="RigidBody2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(178, 141)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FrontTire"]
+shape = SubResource("CircleShape2D_fl6mm")
+
+[node name="ColorRect" type="ColorRect" parent="FrontTire"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -39.5
+offset_top = -36.0
+offset_right = 39.5
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SuspensionRear" type="DampedSpringJoint2D" parent="."]
+position = Vector2(-201, 40)
+node_a = NodePath("../Body")
+node_b = NodePath("../BackTire")
+length = 100.0
+rest_length = 50.0
+stiffness = 64.0
+
+[node name="SuspensionMiddleRear" type="DampedSpringJoint2D" parent="."]
+position = Vector2(-30, 38)
+rotation = 1.02102
+node_a = NodePath("../Body")
+node_b = NodePath("../BackTire")
+length = 200.0
+rest_length = 180.0
+stiffness = 64.0
+
+[node name="SuspensionMiddleRearUpper" type="DampedSpringJoint2D" parent="."]
+position = Vector2(-102, -32)
+rotation = 0.523599
+node_a = NodePath("../Body")
+node_b = NodePath("../BackTire")
+length = 200.0
+rest_length = 180.0
+stiffness = 64.0
+
+[node name="SuspensionMiddleFront2" type="DampedSpringJoint2D" parent="."]
+position = Vector2(8, 37)
+rotation = -1.02102
+node_a = NodePath("../Body")
+node_b = NodePath("../FrontTire")
+length = 200.0
+rest_length = 180.0
+stiffness = 64.0
+
+[node name="SuspensionMiddleFrontUpper" type="DampedSpringJoint2D" parent="."]
+position = Vector2(80, -33)
+rotation = -0.523599
+node_a = NodePath("../Body")
+node_b = NodePath("../FrontTire")
+length = 200.0
+rest_length = 180.0
+stiffness = 64.0
+
+[node name="SuspensionFront" type="DampedSpringJoint2D" parent="."]
+position = Vector2(180, 40)
+node_a = NodePath("../Body")
+node_b = NodePath("../FrontTire")
+length = 100.0
+rest_length = 50.0
+stiffness = 64.0

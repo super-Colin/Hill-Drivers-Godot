@@ -19,6 +19,8 @@ script = ExtResource("1_vb3r8")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -45.0
+offset_right = -45.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
@@ -29,11 +31,22 @@ size_flags_horizontal = 4
 position = Vector2(1043, 940)
 shape = SubResource("RectangleShape2D_g8h5y")
 
-[node name="Car" parent="." instance=ExtResource("2_axb3p")]
-position = Vector2(120, 586)
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2"]
 position = Vector2(865, 744)
 shape = SubResource("CapsuleShape2D_tng6c")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+visible = false
+polygon = PackedVector2Array(478, 767, 740, 722, 865, 643, 997, 726, 1239, 740, 880, 866)
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="StaticBody2D3"]
+position = Vector2(-930, 11)
+polygon = PackedVector2Array(863, 646, 831, 651, 805, 663, 789, 676, 775, 690, 751, 708, 723, 719, 686, 728, 643, 734, 585, 737, 739, 762, 812, 826, 1025, 808, 1084, 746, 1488, 836, 1761, 746, 2482, 780, 3077, 819, 3355, 502, 3164, 40, 2937, 116, 2871, 286, 2774, 371, 2673, 403, 2513, 344, 2378, 340, 2264, 409, 2207, 485, 2135, 537, 2017, 538, 1933, 497, 1861, 474, 1745, 545, 1650, 624, 1568, 674, 1505, 720, 1433, 741, 1220, 736, 1175, 735, 1150, 732, 1108, 730, 1041, 721, 1009, 713, 977, 707, 953, 694, 940, 680, 918, 661, 884, 651)
+
+[node name="Car" parent="." instance=ExtResource("2_axb3p")]
+position = Vector2(333, 486)
