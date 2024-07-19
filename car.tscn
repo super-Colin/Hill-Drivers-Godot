@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://bihbipx5ilscp"]
+[gd_scene load_steps=8 format=3 uid="uid://bihbipx5ilscp"]
 
 [ext_resource type="Script" path="res://Car.gd" id="1_ygs4g"]
 [ext_resource type="Texture2D" uid="uid://br8a4n378f42w" path="res://icon.svg" id="2_mwtfj"]
@@ -9,8 +9,12 @@ absorbent = true
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_40s3u"]
 size = Vector2(507, 101)
 
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_c2cjr"]
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_fl6mm"]
 radius = 49.0408
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ykm6a"]
 
 [node name="Car" type="Node2D"]
 script = ExtResource("1_ygs4g")
@@ -23,6 +27,7 @@ texture = ExtResource("2_mwtfj")
 unique_name_in_owner = true
 mass = 0.64
 physics_material_override = SubResource("PhysicsMaterial_icikf")
+can_sleep = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Body"]
 shape = SubResource("RectangleShape2D_40s3u")
@@ -36,6 +41,8 @@ offset_bottom = 41.0
 [node name="BackTire" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(-201, 141)
+physics_material_override = SubResource("PhysicsMaterial_c2cjr")
+can_sleep = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="BackTire"]
 shape = SubResource("CircleShape2D_fl6mm")
@@ -54,9 +61,13 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="Point" type="Node2D" parent="BackTire"]
+
 [node name="FrontTire" type="RigidBody2D" parent="."]
 unique_name_in_owner = true
 position = Vector2(178, 141)
+physics_material_override = SubResource("PhysicsMaterial_ykm6a")
+can_sleep = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FrontTire"]
 shape = SubResource("CircleShape2D_fl6mm")
@@ -75,6 +86,8 @@ grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_use_anchors_ = true
 
+[node name="Point" type="Node2D" parent="FrontTire"]
+
 [node name="SuspensionRear" type="DampedSpringJoint2D" parent="."]
 position = Vector2(-201, 40)
 node_a = NodePath("../Body")
@@ -82,6 +95,8 @@ node_b = NodePath("../BackTire")
 length = 100.0
 rest_length = 50.0
 stiffness = 64.0
+
+[node name="Point" type="Node2D" parent="SuspensionRear"]
 
 [node name="SuspensionMiddleRear" type="DampedSpringJoint2D" parent="."]
 position = Vector2(-30, 38)
@@ -92,6 +107,8 @@ length = 200.0
 rest_length = 180.0
 stiffness = 64.0
 
+[node name="Point" type="Node2D" parent="SuspensionMiddleRear"]
+
 [node name="SuspensionMiddleRearUpper" type="DampedSpringJoint2D" parent="."]
 position = Vector2(-102, -32)
 rotation = 0.523599
@@ -100,7 +117,9 @@ node_b = NodePath("../BackTire")
 length = 200.0
 rest_length = 180.0
 
-[node name="SuspensionMiddleFront2" type="DampedSpringJoint2D" parent="."]
+[node name="Point" type="Node2D" parent="SuspensionMiddleRearUpper"]
+
+[node name="SuspensionMiddleFront" type="DampedSpringJoint2D" parent="."]
 position = Vector2(8, 37)
 rotation = -1.02102
 node_a = NodePath("../Body")
@@ -108,6 +127,8 @@ node_b = NodePath("../FrontTire")
 length = 200.0
 rest_length = 180.0
 stiffness = 64.0
+
+[node name="Point" type="Node2D" parent="SuspensionMiddleFront"]
 
 [node name="SuspensionMiddleFrontUpper" type="DampedSpringJoint2D" parent="."]
 position = Vector2(80, -33)
@@ -117,6 +138,8 @@ node_b = NodePath("../FrontTire")
 length = 200.0
 rest_length = 180.0
 
+[node name="Point" type="Node2D" parent="SuspensionMiddleFrontUpper"]
+
 [node name="SuspensionFront" type="DampedSpringJoint2D" parent="."]
 position = Vector2(180, 40)
 node_a = NodePath("../Body")
@@ -124,3 +147,14 @@ node_b = NodePath("../FrontTire")
 length = 100.0
 rest_length = 50.0
 stiffness = 64.0
+
+[node name="Point" type="Node2D" parent="SuspensionFront"]
+
+[node name="SuspensionRearLine" type="Line2D" parent="."]
+points = PackedVector2Array(-201, 38, -201, 140)
+default_color = Color(0, 0.537255, 0.309804, 1)
+
+[node name="SuspensionFrontLine" type="Line2D" parent="."]
+position = Vector2(379, 0)
+points = PackedVector2Array(-201, 38, -201, 140)
+default_color = Color(0, 0.537255, 0.309804, 1)
