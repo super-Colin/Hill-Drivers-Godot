@@ -11,7 +11,7 @@ func _ready():
 	%EnginePowerSlider/HSlider.drag_ended.connect(func(_e):Events.ChangeEnginePower.emit(%EnginePowerSlider/HSlider.value))
 	%TireFrictionSlider/HSlider.drag_ended.connect(func(_e):Events.ChangeTireFriction.emit(%TireFrictionSlider/HSlider.value))
 	%SuspensionStiffnessSlider/HSlider.drag_ended.connect(func(_e):Events.ChangeSuspensionStiffness.emit(%SuspensionStiffnessSlider/HSlider.value))
-	
+	%RefillFuelButton.pressed.connect(func():Events.refillFuel.emit())
 
 
 

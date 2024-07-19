@@ -151,10 +151,12 @@ stiffness = 64.0
 [node name="Point" type="Node2D" parent="SuspensionFront"]
 
 [node name="SuspensionRearLine" type="Line2D" parent="."]
+visible = false
 points = PackedVector2Array(-201, 38, -201, 140)
 default_color = Color(0, 0.537255, 0.309804, 1)
 
 [node name="SuspensionFrontLine" type="Line2D" parent="."]
+visible = false
 position = Vector2(379, 0)
 points = PackedVector2Array(-201, 38, -201, 140)
 default_color = Color(0, 0.537255, 0.309804, 1)
